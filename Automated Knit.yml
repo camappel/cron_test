@@ -1,0 +1,32 @@
+name: Automated Knit
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # Schedule to run daily at midday GMT
+
+jobs:
+  knit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up R
+      uses: r-lib/actions/setup-r@v1
+
+    - name: Install R packages
+      run: |
+        Rscript -e 'install.packages(c("rmarkdown"))'
+
+    - name: Knit the RMarkdown file
+      run: |
+        Rscript -e 'rmarkdown::render("automate_knit/update.Rmd")'
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "Your Name"
+        git config --global user.email "your.email@example.com"
+        git add automate_knit/update.md
+        git commit -m "Automated Knit Update $(date -u +%Y-%m-%d)"
+        git push origin main

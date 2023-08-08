@@ -1,0 +1,8 @@
+---
+title: "Print Current Date Example"
+output: html_document
+---
+
+## Today's Date
+
+Today is `r format(Sys.Date(), "%B %d, %Y")`.
