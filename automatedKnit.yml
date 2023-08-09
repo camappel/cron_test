@@ -15,6 +15,12 @@ jobs:
     - name: Set up R
       uses: r-lib/actions/setup-r@v1
 
+    - name: Install Pandoc
+      run: |
+        wget https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-linux-amd64.tar.gz
+        tar xvzf pandoc-2.14.2-linux-amd64.tar.gz
+        sudo cp pandoc-2.14.2/bin/pandoc /usr/local/bin/
+
     - name: Install R packages
       run: |
         Rscript -e 'install.packages(c("rmarkdown"))'
