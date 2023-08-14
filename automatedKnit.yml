@@ -1,8 +1,9 @@
 name: Automated Knit
 
 on:
-  schedule:
-    - cron: '0 12 * * *'  # Schedule to run daily at midday GMT
+  push:
+    branches:
+      - main  # Adjust the branch name if needed
 
 jobs:
   knit:
@@ -24,6 +25,9 @@ jobs:
     - name: Install R packages
       run: |
         Rscript -e 'install.packages(c("rmarkdown"))'
+
+    - name: Print System Information
+      run: Rscript -e "install.packages('sysinfo'); sysinfo::sys_info()"
 
     - name: Knit the RMarkdown file
       run: |
